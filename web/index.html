@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReconScope — Attack Surface Report Card</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="scanline"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">◎</span>
+    <div>
+      <h1>ReconScope</h1>
+      <p class="tag">Attack Surface Report Card</p>
+    </div>
+  </div>
+  <a class="ghref" href="https://github.com/Martun1" target="_blank" rel="noopener">by Martin Ivanov</a>
+</header>
+
+<main>
+  <section class="hero">
+    <h2>See your domain the way an attacker does.</h2>
+    <p class="sub">Passive OSINT on public data — DNS, certificate transparency, TLS, HTTP headers
+       and registration — graded <b>A–F</b> with concrete fixes. Nothing intrusive, nothing stored.</p>
+
+    <form id="scanForm" class="scanbar" autocomplete="off">
+      <input id="domain" type="text" placeholder="example.com" spellcheck="false" aria-label="Domain">
+      <button id="scanBtn" type="submit">Scan</button>
+    </form>
+
+    <div class="controls">
+      <label class="chk">
+        <input type="checkbox" id="authorized">
+        <span>I own this domain or am authorized to assess it</span>
+      </label>
+      <button id="demoBtn" class="linkbtn" type="button">▶ Try a live demo (no network)</button>
+    </div>
+    <p id="notice" class="notice" hidden></p>
+  </section>
+
+  <section id="loading" class="loading" hidden>
+    <div class="spinner"></div>
+    <p>Gathering public intelligence…</p>
+  </section>
+
+  <section id="results" class="results" hidden>
+    <div class="scorecard">
+      <div class="dial" id="dial">
+        <svg viewBox="0 0 120 120">
+          <circle class="dial-bg" cx="60" cy="60" r="52"></circle>
+          <circle class="dial-fg" id="dialFg" cx="60" cy="60" r="52"
+                  transform="rotate(-90 60 60)"></circle>
+        </svg>
+        <div class="dial-center">
+          <span class="dial-grade" id="ovGrade">–</span>
+          <span class="dial-score" id="ovScore"></span>
+        </div>
+      </div>
+      <div class="scoremeta">
+        <h3 id="resDomain">—</h3>
+        <p class="meta-line" id="resMeta"></p>
+        <p class="meta-line gray" id="resTime"></p>
+        <div class="actions">
+          <button id="exportBtn" class="linkbtn" type="button">⬇ Export JSON</button>
+          <button id="printBtn" class="linkbtn" type="button">🖶 Print report</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" id="categories"></div>
+
+    <div class="fixes" id="fixes" hidden>
+      <h3>Top fixes <span class="muted">— highest impact first</span></h3>
+      <ol id="fixList"></ol>
+    </div>
+  </section>
+
+  <section id="empty" class="empty">
+    <p>Enter a domain above, or try the demo to see a full report.</p>
+  </section>
+</main>
+
+<footer>
+  <p>ReconScope · passive OSINT · <b>scan only domains you own or are authorized to assess</b>.
+     Standard-library Python · MIT licensed.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
